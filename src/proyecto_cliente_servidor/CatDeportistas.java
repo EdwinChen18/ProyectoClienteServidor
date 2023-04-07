@@ -8,225 +8,89 @@ import java.util.LinkedList;
 
 public class CatDeportistas extends javax.swing.JFrame {
 
-    LinkedList<CatalogoDeportistas> catalogoDeportistas ;
+    Catalogos catalogo;
+    
         
     public CatDeportistas(Catalogos catalogo) {
         initComponents();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setTitle("Catalago de Deportistas");
-        catalogoDeportistas = catalogo.getCatalogoDeportistas();
+        this.catalogo = catalogo;
     }
     
         public void agregar(){
         
-        CatalogoDeportistas deportista = new CatalogoDeportistas();
-        try{
-            deportista.setNombreCompletoN(jTextField2.getText());
-            deportista.setCiudad(jTextField2.getText());
-            deportista.setDireccion(jTextField2.getText());
-            deportista.setTelefono(jTextField2.getText());
-            deportista.setCorreo(jTextField2.getText());
+            CatalogoDeportistas catDeportistas = new CatalogoDeportistas();
+            catDeportistas.setIdentificacion(Integer.parseInt(jTextField1.getText()));
+            catDeportistas.setNombreCompletoN(jTextField2.getText());
+            catDeportistas.setCiudad(jTextField3.getText());
+            catDeportistas.setDireccion(jTextField4.getText());
+            catDeportistas.setTelefono(jTextField5.getText());
+            catDeportistas.setCorreo(jTextField6.getText());
             if(jCheckBox1.isSelected()){
-                deportista.setEstadoN("Activo");
+                catDeportistas.setEstadoN("Activo");
             }else{
-                deportista.setEstadoN("Inactivo");
+                catDeportistas.setEstadoN("Inactivo");
             }
-            DataOutputStream dos = new DataOutputStream(new FileOutputStream(
-            "catalogos.dat", true));
-            dos.writeInt(deportista.getIdentificacion());
-            dos.writeUTF(deportista.getNombreCompletoN());
-            dos.writeUTF(deportista.getCiudad());
-            dos.writeUTF(deportista.getDireccion());
-            dos.writeUTF(deportista.getTelefono());
-            dos.writeUTF(deportista.getCorreo());
-            dos.writeUTF(deportista.getEstadoN());
-            JOptionPane.showMessageDialog(null, "Datos guardados correctamente",
-                    "Datos Guardados", JOptionPane.INFORMATION_MESSAGE);
-            limpiar();
-        }catch(IOException ex01){
-        JOptionPane.showMessageDialog(null, "¡Error al guardar, revise!", "Error",
-            JOptionPane.ERROR_MESSAGE);
-        }
+            LinkedList<CatalogoDeportistas> registroDeportistas = this.catalogo.getCatalogoDeportistas();
+        registroDeportistas.add(catDeportistas);
+        JOptionPane.showMessageDialog(null, "Datos guardados correctamente",
+                "Datos Guardados", JOptionPane.INFORMATION_MESSAGE);
+        limpiar();
     }
     public void editar(){
-        int encontrado = 0;
-        int idCatag = Integer.parseInt(jTextField1.getText());
-        //int idDepor = deportista.getIdentificacion();
-        //String nombreD = deportista.getNombreCompletoN();
-        //String ciudad = deportista.getCiudad();
-        //String direccion = deportista.getDireccion();
-        //String telefono = deportista.getTelefono();
-        //String correo = deportista.getCorreo();
-        //String estado = deportista.getEstadoN();
-//        try{
-//            DataInputStream dis = new DataInputStream(new FileInputStream(
-//            "catalogos.dat"));
-//            DataOutputStream dos = new DataOutputStream(new FileOutputStream(
-//            "auxiliar.dat"));
-//            try{
-//                while(dis.available()>0){
-//                    idDepor = dis.readInt();
-//                    nombreD = dis.readUTF();
-//                    ciudad = dis.readUTF();
-//                    direccion = dis.readUTF();
-//                    telefono = dis.readUTF();
-//                    correo = dis.readUTF();
-//                    estado = dis.readUTF();
-//                    if (idCatag==idDepor){
-//                        encontrado = 1;
-//                        nombreD = jTextField2.getText();
-//                        ciudad = jTextField3.getText();
-//                        direccion = jTextField4.getText();
-//                        telefono = jTextField5.getText();
-//                        correo = jTextField6.getText();
-//                        if (jCheckBox1.isSelected()){
-//                            estado="Activo";
-//                        }else{
-//                            estado="Inactivo";
-//                        }
-//                    }
-//                    dos.writeInt(idDepor);
-//                    dos.writeUTF(nombreD);
-//                    dos.writeUTF(ciudad);
-//                    dos.writeUTF(direccion);
-//                    dos.writeUTF(telefono);
-//                    dos.writeUTF(correo);
-//                    dos.writeUTF(estado);
-//                }   if (encontrado == 1){
-//                    JOptionPane.showMessageDialog(null,
-//                        "¡Datos modificados correctamente!",
-//                         "Dato modificados", JOptionPane.INFORMATION_MESSAGE);
-//                    }else{
-//                    JOptionPane.showMessageDialog(null,
-//                     "¡El dato buscado no existe, revise!",
-//                        "Dato no existe", JOptionPane.ERROR_MESSAGE);  
-//                }
-//            }catch(EOFException ex02){
-//                dis.close();
-//                dos.close();
-//                intercambiar();
-//            }
-//        }catch(FileNotFoundException ex03){
-//            JOptionPane.showMessageDialog(null,
-//                 "¡El archivo no existe, revise!",
-//                    "Archivo no existe", JOptionPane.ERROR_MESSAGE);
-//        }catch(IOException ex04){
-//            JOptionPane.showMessageDialog(null,
-//                "¡Error general desconocido, revise!",
-//                    "Archivo no existe", JOptionPane.ERROR_MESSAGE);  
-//        }
+
+        CatalogoDeportistas deportistaEncontrado = null;
+        int idDeportista=Integer.parseInt(jTextField1.getText());
+        for(CatalogoDeportistas unDeportista : this.catalogo.getCatalogoDeportistas()){
+            if(idDeportista== unDeportista.getIdentificacion()){
+                JOptionPane.showMessageDialog(null, "Deportista encontrado");
+                deportistaEncontrado = unDeportista;
+               
+                break;
+            }
+        }
+        if(deportistaEncontrado !=null){
+            deportistaEncontrado.setNombreCompletoN(jTextField2.getText());
+            deportistaEncontrado.setCiudad(jTextField3.getText());
+            deportistaEncontrado.setDireccion(jTextField4.getText());
+            deportistaEncontrado.setTelefono(jTextField5.getText());
+            deportistaEncontrado.setCorreo(jTextField6.getText());
+                if(jCheckBox1.isSelected()){
+                deportistaEncontrado.setEstadoN("Activo");
+            }else{
+                deportistaEncontrado.setEstadoN("Inactivo");
+            }
+            JOptionPane.showMessageDialog(null,"Deportista actualizado");
+        }else{
+            JOptionPane.showMessageDialog(null,"El Deportista no existe en la base de datos");
+        }
     }
     public void inactivar(){
-//        int idCatag = Integer.parseInt(jTextField1.getText());
-//        int encontrado = 0;
-//        int idDepor = catDeportistas.getIdentificacion();
-//        String nombreD = catDeportistas.getNombreCompletoN();
-//        String ciudad = catDeportistas.getCiudad();
-//        String direccion = catDeportistas.getDireccion();
-//        String telefono = catDeportistas.getTelefono();
-//        String correo = catDeportistas.getCorreo();
-//        String estado = catDeportistas.getEstadoN();
-//        try{
-//            DataInputStream dis = new DataInputStream(new FileInputStream(
-//            "catalogos.dat"));
-//            DataOutputStream dos = new DataOutputStream(new FileOutputStream(
-//            "auxiliar.dat"));
-//            try{
-//                while(dis.available()>0){
-//                    idDepor = dis.readInt();
-//                    nombreD = dis.readUTF();
-//                    ciudad = dis.readUTF();
-//                    direccion = dis.readUTF();
-//                    telefono = dis.readUTF();
-//                    correo = dis.readUTF();
-//                    estado = dis.readUTF();
-//                    if(idCatag == idDepor){
-//                        encontrado = 1;
-//                   if (!estado.equals("Inactivo")){
-//                        estado = "Inactivo";
-//                        JOptionPane.showMessageDialog(null,
-//                            "¡El dato ha sido inactivado exitosamente!",
-//                            "Dato inactivado", JOptionPane.INFORMATION_MESSAGE);
-//                    } else {
-//                        JOptionPane.showMessageDialog(null,
-//                            "¡El dato ya está inactivo!",
-//                            "Dato inactivo", JOptionPane.WARNING_MESSAGE);
-//                        }
-//                    }
-//                    dos.writeInt(idDepor);
-//                    dos.writeUTF(nombreD);
-//                    dos.writeUTF(ciudad);
-//                    dos.writeUTF(direccion);
-//                    dos.writeUTF(telefono);
-//                    dos.writeUTF(correo);
-//                    dos.writeUTF(estado);
-//                }
-//            dis.close();
-//            dos.close();
-//            intercambiar();
-//           if (encontrado==0) {
-//                JOptionPane.showMessageDialog(null,
-//                    "¡El dato buscado no existe, revise!",
-//                    "Dato no existe", JOptionPane.ERROR_MESSAGE); 
-//            }
-//        } catch(EOFException ex){
-//            dis.close();
-//            dos.close();
-//            intercambiar();
-//        }
-//    } catch(IOException ex){
-//        JOptionPane.showMessageDialog(null,
-//            "¡Error general desconocido, revise!",
-//            "Archivo no existe", JOptionPane.ERROR_MESSAGE);  
-//        }
+        CatalogoDeportistas deportistaEncontrado = null;
+        int idDeportista=Integer.parseInt(jTextField1.getText());
+        for(CatalogoDeportistas unDeportista : this.catalogo.getCatalogoDeportistas()){
+            if(idDeportista== unDeportista.getIdentificacion()){
+                JOptionPane.showMessageDialog(null, "Deportista encontrado");
+                deportistaEncontrado = unDeportista;
+               
+                break;
+            }
+        }
+        if(deportistaEncontrado != null){
+            if(deportistaEncontrado.getEstadoN().equals("Activo")){
+                deportistaEncontrado.setEstadoN("Inactivo");
+                JOptionPane.showMessageDialog(null, "El deportista ha sido inactivado");
+            }else{
+                JOptionPane.showMessageDialog(null, "El deportista esta inactivo");
+            }
+        }else{
+           JOptionPane.showMessageDialog(null, "Deportista no existe en la base de datos"); 
+        }
     }
         
-    public void intercambiar(){
-//        int encontrado =0;
-//        int idDepor = catDeportistas.getIdentificacion();
-//        String nombreD = catDeportistas.getNombreCompletoN();
-//        String ciudad = catDeportistas.getCiudad();
-//        String direccion = catDeportistas.getDireccion();
-//        String telefono = catDeportistas.getTelefono();
-//        String correo = catDeportistas.getCorreo();
-//        String estado = catDeportistas.getEstadoN();
-//        try{
-//            DataInputStream dis = new DataInputStream(new FileInputStream(
-//            "auxiliar.dat"));
-//            DataOutputStream dos = new DataOutputStream(new FileOutputStream(
-//            "catalogos.dat"));
-//            try{
-//                while(true){
-//                    idDepor = dis.readInt();
-//                    nombreD = dis.readUTF();
-//                    ciudad = dis.readUTF();
-//                    direccion = dis.readUTF();
-//                    telefono = dis.readUTF();
-//                    correo = dis.readUTF();
-//                    estado = dis.readUTF();
-//                    dos.writeInt(idDepor);
-//                    dos.writeUTF(nombreD);
-//                    dos.writeUTF(ciudad);
-//                    dos.writeUTF(direccion);
-//                    dos.writeUTF(telefono);
-//                    dos.writeUTF(correo);
-//                    dos.writeUTF(estado);
-//                }
-//            }catch(EOFException ex03){
-//                dis.close();
-//                dos.close();
-//            }
-//        }catch(FileNotFoundException ex04){
-//        JOptionPane.showMessageDialog(null,
-//            "¡El archivo no existe, revise!",
-//            "Archivo no existe", JOptionPane.ERROR_MESSAGE);
-//        }catch(IOException ex05){
-//            JOptionPane.showMessageDialog(null,
-//                "¡Error general desconocido, revise!",
-//                "Archivo no existe", JOptionPane.ERROR_MESSAGE);
-//        }
-    }
+
     public void limpiar(){
         jTextField1.setText("");
         jTextField2.setText("");

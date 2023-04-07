@@ -188,89 +188,28 @@ public class CatDeporte extends javax.swing.JFrame {
        
     }
     public void inactivar(){
-//    String idCatag = jTextField1.getText();
-//    boolean encontrado = false;
-//    try{
-//        DataInputStream dis = new DataInputStream(new FileInputStream(
-//                "catalogosDeportes.dat"));
-//        DataOutputStream dos = new DataOutputStream(new FileOutputStream(
-//                "auxiliar.dat"));
-//        try{
-//            while(dis.available()>0){
-//                String nombreD = dis.readUTF();
-//                String caractD = dis.readUTF();
-//                String estado = dis.readUTF();
-//                if (idCatag.equals(nombreD)){
-//                    encontrado = true;
-//                    if (!estado.equals("Inactivo")){
-//                        estado = "Inactivo";
-//                    } else {
-//                        JOptionPane.showMessageDialog(null,
-//                            "¡El dato ya está inactivo!",
-//                            "Dato inactivo", JOptionPane.WARNING_MESSAGE);
-//                    }
-//                }
-//                dos.writeUTF(nombreD);
-//                dos.writeUTF(caractD);
-//                dos.writeUTF(estado);
-//            }
-//            dis.close();
-//            dos.close();
-//            intercambiar();
-//            if (encontrado) {
-//                JOptionPane.showMessageDialog(null,
-//                    "¡El dato ha sido inactivado exitosamente!",
-//                    "Dato inactivado", JOptionPane.INFORMATION_MESSAGE);
-//            } else {
-//                JOptionPane.showMessageDialog(null,
-//                    "¡El dato buscado no existe, revise!",
-//                    "Dato no existe", JOptionPane.ERROR_MESSAGE);
-//            }
-//        } catch(EOFException ex){
-//            dis.close();
-//            dos.close();
-//            intercambiar();
-//        }
-//    } catch(IOException ex){
-//        JOptionPane.showMessageDialog(null,
-//            "¡Error general desconocido, revise!",
-//            "Archivo no existe", JOptionPane.ERROR_MESSAGE);  
-//    }
+
+        CatalogoDeportes deporteEncontrado = null;
+        String nomDeporte= jTextField1.getText();
+        for(CatalogoDeportes unDeporte : this.catalogo.getCatalogoDeportes()){
+            if(nomDeporte.equals(unDeporte.getNombreDeporte())){
+                JOptionPane.showMessageDialog(null, "Deporte encontrado");
+                deporteEncontrado = unDeporte;
+                break;
+            }
+        }
+        if(deporteEncontrado != null){
+            if(deporteEncontrado.getEstadoD().equals("Activo")){
+                deporteEncontrado.setEstadoD("Inactivo");
+                JOptionPane.showMessageDialog(null, "El deporte ha sido inactivado");
+            }else{
+                JOptionPane.showMessageDialog(null, "El deporte esta inactivo");
+            }
+        }else{
+           JOptionPane.showMessageDialog(null, "Deporte no existe en la base de datos"); 
+        }
 }
 
-    public void intercambiar(){
-//        int encontrado =0;
-//        String nombreD = catD.getNombreDeporte();
-//        String caractD = catD.getCaracteristicasD();
-//        String estado = catD.getEstadoD();
-//        try{
-//            DataInputStream dis = new DataInputStream(new FileInputStream(
-//            "auxiliar.dat"));
-//            DataOutputStream dos = new DataOutputStream(new FileOutputStream(
-//            "catalogosDeportes.dat"));
-//            try{
-//                while(true){
-//                    nombreD = dis.readUTF();
-//                    caractD = dis.readUTF();
-//                    estado = dis.readUTF();
-//                    dos.writeUTF(nombreD);
-//                    dos .writeUTF(caractD);
-//                    dos.writeUTF(estado);
-//                }
-//            }catch(EOFException ex03){
-//                dis.close();
-//                dos.close();
-//            }
-//        }catch(FileNotFoundException ex04){
-//        JOptionPane.showMessageDialog(null,
-//            "¡El archivo no existe, revise!",
-//            "Archivo no existe", JOptionPane.ERROR_MESSAGE);
-//        }catch(IOException ex05){
-//            JOptionPane.showMessageDialog(null,
-//                "¡Error general desconocido, revise!",
-//                "Archivo no existe", JOptionPane.ERROR_MESSAGE);
-//        }
-    }
     
     public void limpiar(){
         jTextField1.setText("");

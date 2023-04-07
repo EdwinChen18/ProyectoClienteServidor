@@ -2,14 +2,14 @@
 package proyecto_cliente_servidor;
 
 import javax.swing.JFrame;
-import java.io.*;
 import javax.swing.JOptionPane;
+import java.io.*;
+import java.util.LinkedList;
 
 
 
 public class CatRutinas extends javax.swing.JFrame {
 
-    Rutina r = new Rutina();
     //CatDeporte catD= new CatDeporte();
     Catalogos catalogo;
     public CatRutinas(Catalogos catalogo) {
@@ -21,6 +21,21 @@ public class CatRutinas extends javax.swing.JFrame {
     }
 
 public void agregar(){
+    
+        Rutina r = new Rutina();
+        r.setDescripcionR(jTextField1.getText());
+        r.setDeporteC(jTextField2.getText());
+        r.setTiempo(Integer.parseInt(jTextField2.getText()));
+        if(jCheckBox1.isSelected()){
+            r.setEstadoR("Activo");
+        }else{
+             r.setEstadoR("Inactivo");
+        }
+    LinkedList<CatalogoRutinas> registroR = this.catalogo.getCatalogoRutinas();
+        registroR.add(r);
+        JOptionPane.showMessageDialog(null, "Datos guardados correctamente",
+                "Datos Guardados", JOptionPane.INFORMATION_MESSAGE);
+        limpiar();
         
 //        boolean deporteExiste = false;
 //        boolean rutinaExiste = false;

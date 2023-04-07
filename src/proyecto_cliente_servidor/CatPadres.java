@@ -11,13 +11,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.LinkedList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 
 public class CatPadres extends javax.swing.JFrame {
 
-    CatalogoPadres catPadres = new CatalogoPadres();
     Catalogos catalogo ;
     
     /**
@@ -31,216 +31,77 @@ public class CatPadres extends javax.swing.JFrame {
         this.catalogo = catalogo;
     }
     public void agregar(){
-//        
-//        try{
-//            catPadres.setNombreCompletoPadres(jTextField1.getText());
-//            catPadres.setNinoCargo(jTextField1.getText());
-//            catPadres.setCiudadP(jTextField1.getText());
-//            catPadres.setDireccionP(jTextField1.getText());
-//            catPadres.setTelefonoP(jTextField1.getText());
-//            catPadres.setCorreoP(jTextField1.getText());
-//            if(jCheckBox1.isSelected()){
-//                catPadres.setEstadoP("Activo");
-//            }else{
-//                catPadres.setEstadoP("Inactivo");
-//            }
-//            DataOutputStream dos = new DataOutputStream(new FileOutputStream(
-//            "catalogos.dat", true));
-//            dos.writeUTF(catPadres.getNombreCompletoPadres());
-//            dos.writeUTF(catPadres.getNinoCargo());
-//            dos.writeUTF(catPadres.getCiudadP());
-//            dos.writeUTF(catPadres.getDireccionP());
-//            dos.writeUTF(catPadres.getTelefonoP());
-//            dos.writeUTF(catPadres.getCorreoP());
-//            dos.writeUTF(catPadres.getEstadoP());
-//            JOptionPane.showMessageDialog(null, "Datos guardados correctamente",
-//                    "Datos Guardados", JOptionPane.INFORMATION_MESSAGE);
-//            limpiar();
-//        }catch(IOException ex01){
-//        JOptionPane.showMessageDialog(null, "¡Error al guardar, revise!", "Error",
-//            JOptionPane.ERROR_MESSAGE);
-//        }
+        
+        CatalogoPadres catPadres = new CatalogoPadres();
+        catPadres.setNombreCompletoPadres(jTextField1.getText());
+        catPadres.setNinoCargo(jTextField2.getText());
+        catPadres.setCiudadP(jTextField3.getText());
+        catPadres.setDireccionP(jTextField4.getText());
+        catPadres.setTelefonoP(jTextField5.getText());
+        catPadres.setCorreoP(jTextField6.getText());
+        if(jCheckBox1.isSelected()){
+                catPadres.setEstadoP("Activo");
+        }else{
+                catPadres.setEstadoP("Inactivo");
+            }
+    LinkedList<CatalogoPadres> registroPadres = this.catalogo.getCatalogoPadres();
+        registroPadres.add(catPadres);
+        JOptionPane.showMessageDialog(null, "Datos guardados correctamente",
+                "Datos Guardados", JOptionPane.INFORMATION_MESSAGE);
+        limpiar();
     }
     public void editar(){
-//        int encontrado = 0;
-//        String idCatag = jTextField1.getText();
-//        String nombreP = catPadres.getNombreCompletoPadres();
-//        String nombreN = catPadres.getNinoCargo();
-//        String ciudad = catPadres.getCiudadP();
-//        String direccion = catPadres.getDireccionP();
-//        String telefono = catPadres.getTelefonoP();
-//        String correo = catPadres.getCorreoP();
-//        String estado = catPadres.getEstadoP();
-//        try{
-//            DataInputStream dis = new DataInputStream(new FileInputStream(
-//            "catalogos.dat"));
-//            DataOutputStream dos = new DataOutputStream(new FileOutputStream(
-//            "auxiliar.dat"));
-//            try{
-//                while(dis.available()>0){
-//                    nombreP = dis.readUTF();
-//                    nombreN = dis.readUTF();
-//                    ciudad = dis.readUTF();
-//                    direccion = dis.readUTF();
-//                    telefono = dis.readUTF();
-//                    correo = dis.readUTF();
-//                    estado = dis.readUTF();
-//                    if (idCatag.equals(nombreP)){
-//                        encontrado = 1;
-//                        nombreP = jTextField1.getText();
-//                        nombreN = jTextField2.getText();
-//                        ciudad = jTextField3.getText();
-//                        direccion = jTextField4.getText();
-//                        telefono = jTextField5.getText();
-//                        correo = jTextField6.getText();
-//                        if (jCheckBox1.isSelected()){
-//                            estado="Activo";
-//                        }else{
-//                            estado="Inactivo";
-//                        }
-//                    }
-//                    dos.writeUTF(nombreP);
-//                    dos.writeUTF(nombreN);
-//                    dos.writeUTF(ciudad);
-//                    dos.writeUTF(direccion);
-//                    dos.writeUTF(telefono);
-//                    dos.writeUTF(correo);
-//                    dos.writeUTF(estado);
-//                }   if (encontrado == 1){
-//                    JOptionPane.showMessageDialog(null,
-//                        "¡Datos modificados correctamente!",
-//                         "Dato modificados", JOptionPane.INFORMATION_MESSAGE);
-//                    }else{
-//                    JOptionPane.showMessageDialog(null,
-//                     "¡El dato buscado no existe, revise!",
-//                        "Dato no existe", JOptionPane.ERROR_MESSAGE);  
-//                }
-//                limpiar();
-//            }catch(EOFException ex02){
-//                dis.close();
-//                dos.close();
-//                intercambiar();
-//            }
-//        }catch(FileNotFoundException ex03){
-//            JOptionPane.showMessageDialog(null,
-//                 "¡El archivo no existe, revise!",
-//                    "Archivo no existe", JOptionPane.ERROR_MESSAGE);
-//        }catch(IOException ex04){
-//            JOptionPane.showMessageDialog(null,
-//                "¡Error general desconocido, revise!",
-//                    "Archivo no existe", JOptionPane.ERROR_MESSAGE);  
-//        }
+        
+        CatalogoPadres padreEncontrado = new CatalogoPadres();
+        String nombEncargado = jTextField1.getText();
+        for(CatalogoPadres unPadre : this.catalogo.getCatalogoPadres()){
+            if(nombEncargado.equals(unPadre.getNombreCompletoPadres())){
+                JOptionPane.showMessageDialog(null, "Deporte encontrado");
+                padreEncontrado = unPadre;
+                
+                break;
+            }
+        }
+        if(padreEncontrado !=null){
+            padreEncontrado.setNinoCargo(jTextField2.getText());
+            padreEncontrado.setCiudadP(jTextField3.getText());
+            padreEncontrado.setDireccionP(jTextField4.getText());
+            padreEncontrado.setTelefonoP(jTextField5.getText());
+            padreEncontrado.setCorreoP(jTextField6.getText());
+            if(jCheckBox1.isSelected()){
+                padreEncontrado.setEstadoP("Activo");
+        }else{
+                padreEncontrado.setEstadoP("Inactivo");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null,"El deporte no existe en la base de datos");
+        }
+
     }
     public void inactivar(){
-//    String idCatag = jTextField1.getText();
-//    boolean encontrado = false;
-//    try{
-//        DataInputStream dis = new DataInputStream(new FileInputStream("catalogos.dat"));
-//        DataOutputStream dos = new DataOutputStream(new FileOutputStream("auxiliar.dat"));
-//        try{
-//            while(dis.available()>0){
-//                String nombreP = dis.readUTF();
-//                String nombreN = dis.readUTF();
-//                String ciudad = dis.readUTF();
-//                String direccion = dis.readUTF();
-//                String telefono = dis.readUTF();
-//                String correo = dis.readUTF();
-//                String estado = dis.readUTF();
-//                if (idCatag.equals(nombreP)){
-//                    encontrado = true;
-//                    if (!estado.equals("Inactivo")){
-//                        estado = "Inactivo";
-//                        JOptionPane.showMessageDialog(null,
-//                            "¡El dato ha sido inactivado exitosamente!",
-//                            "Dato inactivado", JOptionPane.INFORMATION_MESSAGE);
-//                    } else {
-//                        JOptionPane.showMessageDialog(null,
-//                            "¡El dato ya está inactivo!",
-//                            "Dato inactivo", JOptionPane.WARNING_MESSAGE);
-//                    }
-//                }
-//                dos.writeUTF(nombreP);
-//                dos.writeUTF(nombreN);
-//                dos.writeUTF(ciudad);
-//                dos.writeUTF(direccion);
-//                dos.writeUTF(telefono);
-//                dos.writeUTF(correo);
-//                dos.writeUTF(estado);
-//            }
-//            dis.close();
-//            dos.close();
-//            intercambiar();
-//            if (!encontrado) {
-//                JOptionPane.showMessageDialog(null,
-//                    "¡El dato buscado no existe, revise!",
-//                    "Dato no existe", JOptionPane.ERROR_MESSAGE); 
-//            }
-//        } catch(EOFException ex){
-//            dis.close();
-//            dos.close();
-//            intercambiar();
-//        }
-//    } catch(IOException ex){
-//        JOptionPane.showMessageDialog(null,
-//            "¡Error general desconocido, revise!",
-//            "Archivo no existe", JOptionPane.ERROR_MESSAGE);  
-//    }
-}
-//    public void inactivar(){
-//        if (jCheckBox1.isSelected()){
-//            JOptionPane.showMessageDialog(null, "El deporte esta activo",
-//                    "Estado: Activo", JOptionPane.INFORMATION_MESSAGE);
-//        }else{
-//        JOptionPane.showMessageDialog(null, "El deporte esta inactivo",
-//            "Estado: Inactivo", JOptionPane.INFORMATION_MESSAGE);
-//        }
-//    }
-    
-    public void intercambiar(){
-//        int encontrado =0;
-//        String nombreP = catPadres.getNombreCompletoPadres();
-//        String nombreN = catPadres.getNinoCargo();
-//        String ciudad = catPadres.getCiudadP();
-//        String direccion = catPadres.getDireccionP();
-//        String telefono = catPadres.getTelefonoP();
-//        String correo = catPadres.getCorreoP();
-//        String estado = catPadres.getEstadoP();
-//        try{
-//            DataInputStream dis = new DataInputStream(new FileInputStream(
-//            "auxiliar.dat"));
-//            DataOutputStream dos = new DataOutputStream(new FileOutputStream(
-//            "catalogos.dat"));
-//            try{
-//                while(true){
-//                    nombreP = dis.readUTF();
-//                    nombreN = dis.readUTF();
-//                    ciudad = dis.readUTF();
-//                    direccion = dis.readUTF();
-//                    telefono = dis.readUTF();
-//                    correo = dis.readUTF();
-//                    estado = dis.readUTF();
-//                    dos.writeUTF(nombreP);
-//                    dos.writeUTF(nombreN);
-//                    dos.writeUTF(ciudad);
-//                    dos.writeUTF(direccion);
-//                    dos.writeUTF(telefono);
-//                    dos.writeUTF(correo);
-//                    dos.writeUTF(estado);
-//                }
-//            }catch(EOFException ex03){
-//                dis.close();
-//                dos.close();
-//            }
-//        }catch(FileNotFoundException ex04){
-//        JOptionPane.showMessageDialog(null,
-//            "¡El archivo no existe, revise!",
-//            "Archivo no existe", JOptionPane.ERROR_MESSAGE);
-//        }catch(IOException ex05){
-//            JOptionPane.showMessageDialog(null,
-//                "¡Error general desconocido, revise!",
-//                "Archivo no existe", JOptionPane.ERROR_MESSAGE);
-//        }
+        
+        CatalogoPadres padreEncontrado = new CatalogoPadres();
+        String nombEncargado = jTextField1.getText();
+        for(CatalogoPadres unPadre : this.catalogo.getCatalogoPadres()){
+            if(nombEncargado.equals(unPadre.getNombreCompletoPadres())){
+                JOptionPane.showMessageDialog(null, "Deporte encontrado");
+                padreEncontrado = unPadre;
+                
+                break;
+            }
+        }
+            if(padreEncontrado != null){
+            if(padreEncontrado.getEstadoP().equals("Activo")){
+                padreEncontrado.setEstadoP("Inactivo");
+                JOptionPane.showMessageDialog(null, "El encargado ha sido inactivado");
+            }else{
+                JOptionPane.showMessageDialog(null, "El encargado esta inactivo");
+            }
+        }else{
+           JOptionPane.showMessageDialog(null, "Encargado no existe en la base de datos"); 
+        }
     }
+
     public void limpiar(){
         jTextField1.setText("");
         jTextField2.setText("");
