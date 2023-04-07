@@ -32,7 +32,7 @@ public void agregar(){
              r.setEstadoR("Inactivo");
         }
     LinkedList<CatalogoRutinas> registroR = this.catalogo.getCatalogoRutinas();
-        registroR.add(r);
+        //registroR.add(r);
         JOptionPane.showMessageDialog(null, "Datos guardados correctamente",
                 "Datos Guardados", JOptionPane.INFORMATION_MESSAGE);
         limpiar();
