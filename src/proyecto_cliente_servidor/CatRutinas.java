@@ -21,73 +21,91 @@ public class CatRutinas extends javax.swing.JFrame {
     }
 
 public void agregar(){
-    
-        Rutina r = new Rutina();
-        r.setDescripcionR(jTextField1.getText());
+        String verificarR = jTextField2.getText();
+        boolean encontrado = false;
+//        if(!catalogo.equals(verificarR)){
+//            JOptionPane.showMessageDialog(null, "El deporte no existe en la base de datos",
+//                    "Deporte no encontrado", JOptionPane.ERROR_MESSAGE);
+//           
+//        }
+        
+        for(CatalogoRutinas rutina : catalogo.getCatalogoRutinas()){
+            if(rutina.getDeporteC().equals(verificarR)){
+                JOptionPane.showMessageDialog(null, "la rutina del deporte  "+
+                        verificarR+" ya se encuentra registrada","Rutina ya registrada",
+                        JOptionPane.INFORMATION_MESSAGE);
+               encontrado = true;
+               break;
+            }
+        }
+        if(!encontrado){
+        CatalogoRutinas r = new CatalogoRutinas();
+        r.setDescrip(jTextField1.getText());
         r.setDeporteC(jTextField2.getText());
-        r.setTiempo(Integer.parseInt(jTextField2.getText()));
+        r.setTiempo(Integer.parseInt(jTextField3.getText()));
         if(jCheckBox1.isSelected()){
             r.setEstadoR("Activo");
         }else{
              r.setEstadoR("Inactivo");
         }
     LinkedList<CatalogoRutinas> registroR = this.catalogo.getCatalogoRutinas();
-        //registroR.add(r);
+        registroR.add(r);
         JOptionPane.showMessageDialog(null, "Datos guardados correctamente",
                 "Datos Guardados", JOptionPane.INFORMATION_MESSAGE);
         limpiar();
         
-//        boolean deporteExiste = false;
-//        boolean rutinaExiste = false;
-//        try{
-//            // Verificar si el deporte existe
-//            CatDeporte catD= new CatDeporte();
-//            DataInputStream disDeportes = new DataInputStream(new FileInputStream("catalogosDeportes.dat"));
-//            while (disDeportes.available() > 0) {
-//                String deporte = disDeportes.readUTF();
-//                if (deporte.equals(r.getDeporteC())) {
-//                    deporteExiste = true;
-//                    break;
-//                }
-//            }
-//            disDeportes.close();
-//            if (!deporteExiste) {
-//                JOptionPane.showMessageDialog(null, "El deporte ingresado no existe en el catálogo",
-//                        "Error", JOptionPane.ERROR_MESSAGE);
-//                return;
-//            }
-//            
-//            // Verificar si la rutina ya está registrada
-//            DataInputStream disRutinas = new DataInputStream(new FileInputStream("rutinas.dat"));
-//            while (disRutinas.available() > 0) {
-//                String descripcionR = disRutinas.readUTF();
-//                String deporteC = disRutinas.readUTF();
-//                int tiempo = disRutinas.readInt();
-//                if (descripcionR.equals(r.getDescripcionR()) && deporteC.equals(r.getDeporteC())) {
-//                    rutinaExiste = true;
-//                    break;
-//                }
-//            }
-//            disRutinas.close();
-//            if (rutinaExiste) {
-//                JOptionPane.showMessageDialog(null, "La rutina ya está registrada",
-//                        "Error", JOptionPane.ERROR_MESSAGE);
-//                return;
-//            }
-//            
-//            // Guardar la rutina en el archivo
-//            DataOutputStream dos = new DataOutputStream(new FileOutputStream("rutinas.dat", true));
-//            dos.writeUTF(r.getDescripcionR());
-//            dos.writeUTF(r.getDeporteC());
-//            dos.writeInt(r.getTiempo());
-//            JOptionPane.showMessageDialog(null, "Datos guardados correctamente",
-//                    "Datos Guardados", JOptionPane.INFORMATION_MESSAGE);
-//            limpiar();
-//        } catch(IOException ex01) {
-//            JOptionPane.showMessageDialog(null, "¡Error al guardar, revise!", "Error",
-//                    JOptionPane.ERROR_MESSAGE); 
-//        }
+        }
     }
+
+    public void editar(){
+         CatalogoRutinas rutinaEncontrada = null;
+         String nombDeporte = jTextField1.getText();
+         for(CatalogoRutinas unDeporte : this.catalogo.getCatalogoRutinas()){
+             if(nombDeporte.equals(unDeporte.getDeporteC())){
+                 JOptionPane.showMessageDialog(null, "Deporte encontrado");
+                 rutinaEncontrada = unDeporte;
+                 
+                 break;
+             }
+         }
+         if(rutinaEncontrada !=null){
+             rutinaEncontrada.setDescrip(jTextField2.getText());
+             rutinaEncontrada.setTiempo(Integer.parseInt(jTextField3.getText()));
+             if(jCheckBox1.isSelected()){
+                 rutinaEncontrada.setEstadoR("Activo");
+             }else{
+                 rutinaEncontrada.setEstadoR("Inactivo");
+             }
+             JOptionPane.showMessageDialog(null,"Rutina actualizada");
+         }else{
+            JOptionPane.showMessageDialog(null,"La rutina no existe en la base de datos");
+        }
+    }
+    
+    
+    public void inactivar(){
+        CatalogoRutinas rutinaEncontrada = null;
+         String nombDeporte = jTextField2.getText();
+         for(CatalogoRutinas unDeporte : this.catalogo.getCatalogoRutinas()){
+             if(nombDeporte.equals(unDeporte.getDeporteC())){
+                 JOptionPane.showMessageDialog(null, "Deporte encontrado");
+                 rutinaEncontrada = unDeporte;
+                 
+                 break;
+             }
+         }
+         if(rutinaEncontrada !=null){
+             if(rutinaEncontrada.getEstadoR().equals("Activo")){
+                 rutinaEncontrada.setEstadoR("Inactivo");
+                 JOptionPane.showMessageDialog(null, "La rutina ha sido inactivada");
+             }else{
+                JOptionPane.showMessageDialog(null, "La rutina esta inactivada");
+             }
+         }else{
+            JOptionPane.showMessageDialog(null,"La rutina no existe en la base de datos");
+        }
+    }
+
     public void limpiar(){
         jTextField1.setText("");
         jTextField2.setText("");
@@ -138,6 +156,11 @@ public void agregar(){
         });
 
         jButton3.setText("Inactivar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -203,6 +226,11 @@ public void agregar(){
         // TODO add your handling code here:
         agregar();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        inactivar();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
