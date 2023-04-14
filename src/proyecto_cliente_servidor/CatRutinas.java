@@ -231,7 +231,7 @@ public void agregar(){
         // TODO add your handling code here:
         inactivar();
     }//GEN-LAST:event_jButton3ActionPerformed
-
+//
     /**
      * @param args the command line arguments
      */
