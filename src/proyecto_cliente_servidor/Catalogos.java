@@ -11,6 +11,7 @@ import java.util.LinkedList;
  *
  * @author Usuario
  */
+
 public class Catalogos {
     private LinkedList<CatalogoDeportes> catalogoDeportes ;
     private LinkedList<CatalogoDeportistas> catalogoDeportistas ;
